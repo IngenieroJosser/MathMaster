@@ -1,0 +1,39 @@
+*, *::after, *::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f4;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('../../assets/fonts/Nunito-ExtraLight.ttf');
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+p, 
+span, 
+a, 
+li,
+input,
+label,
+button,
+select,
+option,
+th,
+td {
+    font-family: 'Nunito';
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}

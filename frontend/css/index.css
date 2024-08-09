@@ -1,0 +1,198 @@
+@import './settings/base.css';
+@import './settings/fonts.css';
+@import './settings/variables.css';
+
+body {
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    gap: 7em;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.centered-button {
+    margin-top: 20px; /* Espacio entre el contenedor y el botón */
+    background-color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+}
+
+/* Hacer el botón responsive */
+@media (max-width: 768px) {
+    .centered-button {
+        width: 80%;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .centered-button {
+        width: 90%;
+        font-size: 0.8em;
+    }
+}
+
+.container-welcome {
+    text-align: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.flex-login--register {
+    margin-top: 20px;
+}
+
+.flex-login--register a {
+    margin: 0 10px;
+    padding: 7px 20px;
+    background-color: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    border: var(--color-secondary);
+}
+
+.flex-login--register a:nth-child(2) {
+    background-color: #40E0D0;
+    transition: all .2s ease;
+}
+
+.flex-login--register a:hover {
+    background-color: var(--color-secondary);
+}
+
+.container {
+    text-align: center;
+    margin-top: 2em;
+}
+
+.math-signs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.math-sign {
+    font-size: 2em;
+    animation: fadeInOut 3s infinite;
+    opacity: 0;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+/* Estilos para el modal */
+#openModalBtn {
+    background-color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    border-radius: 10px 40px;
+    border: none;
+    padding: 10px 40px;
+    cursor: pointer;
+    transition: all .2s ease;
+    margin-top: 1.4em;
+    color: #FFF;
+}
+
+#openModalBtn:hover {
+    background-color: var(--color-secondary);
+    border-bottom: 5.5px solid var(--color-quaternary);
+}
+
+.modal {
+    display: none; /* Ocultar el modal por defecto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 2% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+h1 {
+    color: #333;
+    
+}
+
+h2 {
+    color: var(--color-secondary);
+    margin-top: 1.3em;
+}
+
+p {
+    margin: 10px 0;
+}
+
+ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+li {
+    margin: 5px 0;
+}
