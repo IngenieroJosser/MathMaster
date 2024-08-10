@@ -1,48 +1,49 @@
 <?php
-include './connection.php';
+    // Incluir la conexión a la base de datos
+    include('connection.php');
 
-// Habilitar el reporte de errores para depuración
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    // Verificar si el formulario fue enviado
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Obtener los datos del formulario
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $role = $_POST['role'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recibir y limpiar los datos del formulario
-    $username = trim($_POST['username']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $role = trim($_POST['role']);
+        // Validar el rol
+        $valid_roles = ['Administrador', 'Docente', 'Estudiante'];
+        if (!in_array($role, $valid_roles)) {
+            die("Error: Rol inválido.");
+        }
 
-    // Verificar que los datos no estén vacíos
-    if (empty($username) || empty($email) || empty($password) || empty($role)) {
-        die("Todos los campos son obligatorios");
+        // Encriptar la contraseña
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Preparar la consulta SQL para insertar el nuevo usuario
+        $sql = "INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)";
+
+        // Preparar la declaración
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $conn->error);
+        }
+
+        // Vincular los parámetros
+        $stmt->bind_param("ssss", $username, $email, $hashed_password, $role);
+
+        // Ejecutar la consulta
+        if ($stmt->execute()) {
+            echo "Registro exitoso.";
+            // Redirigir a la página de inicio de sesión u otra página
+            header("Location: login.html");
+        } else {
+            echo "Error en la ejecución de la consulta: " . $stmt->error;
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
     }
 
-    // Encriptar la contraseña de manera segura
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-
-    if ($hashed_password === false) {
-        die("Error al encriptar la contraseña");
-    }
-
-    // Consulta SQL para insertar el nuevo usuario utilizando declaraciones preparadas
-    $stmt = $conn->prepare("INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)");
-
-    if ($stmt === false) {
-        die("Error al preparar la consulta: " . $conn->error);
-    }
-
-    $stmt->bind_param("ssss", $username, $email, $hashed_password, $role);
-
-    if ($stmt->execute()) {
-        echo "<script>alert('El nuevo registro $username ha sido creado exitosamente');</script>";
-        header("Location: ../frontend/screen/login.html");
-        exit(); // Asegúrate de detener la ejecución después de redirigir
-    } else {
-        echo "Error al ejecutar la consulta: " . $stmt->error;
-    }
-
-    $stmt->close();
-}
-$conn->close();
+    // Cerrar la conexión
+    $conn->close();
 ?>
