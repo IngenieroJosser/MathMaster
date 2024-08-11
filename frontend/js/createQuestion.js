@@ -1,53 +1,43 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//     const form = document.getElementById('createQuestionForm');
-//     const modal = document.getElementById('confirmationModal');
-//     const closeModal = document.querySelector('#confirmationModal .close');
-//     const modalMessage = document.getElementById('modalMessage');
-
-//     // Función para cerrar el modal
-//     function closeModalFunction() {
-//         modal.style.display = 'none';
-//     }
-
-//     form.addEventListener('submit', function(event) {
-//         event.preventDefault();
-        
-//         // Aquí puedes agregar la lógica para guardar la pregunta
-        
-//         // Mostrar el modal
-//         modal.style.display = 'flex';
-        
-//         // Establecer el mensaje del modal
-//         modalMessage.textContent = 'Pregunta creada exitosamente.';
-        
-//         // Cerrar el modal al hacer clic en el botón de cierre
-//         closeModal.onclick = closeModalFunction;
-
-//         // Cerrar el modal al hacer clic fuera del contenido del modal
-//         window.onclick = function(event) {
-//             if (event.target == modal) {
-//                 closeModalFunction();
-//             }
-//         }
-//     });
-
-//     // Asegúrate de que el modal se cierra al hacer clic en el botón de cierre
-//     if (closeModal) {
-//         closeModal.addEventListener('click', closeModalFunction);
-//     }
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('createQuestionForm');
     const modal = document.getElementById('confirmationModal');
-    const closeBtn = document.querySelector('.close');
+    const closeModal = modal.querySelector('.close');
+    const modalMessage = document.getElementById('modalMessage');
 
-    closeBtn.onclick = function() {
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('Pregunta guardada exitosamente.')) {
+                modalMessage.textContent = 'Pregunta creada exitosamente.';
+                modal.style.display = 'block';
+                form.reset(); // Limpiar el formulario
+            } else {
+                modalMessage.textContent = 'Hubo un error al guardar la pregunta.';
+                modal.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            modalMessage.textContent = 'Hubo un error al guardar la pregunta.';
+            modal.style.display = 'block';
+        });
+    });
+
+    closeModal.addEventListener('click', () => {
         modal.style.display = 'none';
-    }
+    });
 
-    window.onclick = function(event) {
+    window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.style.display = 'none';
         }
-    }
+    });
 });

@@ -9,7 +9,7 @@
 <body>
     <div class="container-create-question">
         <h1>Crear Pregunta</h1>
-        <form action="../../backend/createQuestion.php" method="POST" id="createQuestionForm">
+        <form id="createQuestionForm" action="../../backend/createQuestion.php" method="POST">
             <label for="question">Pregunta</label>
             <input type="text" id="question" name="question" required>
             
@@ -27,23 +27,24 @@
             
             <label for="correctOption">Opción Correcta</label>
             <select id="correctOption" name="correctOption" required>
+                <option value="" selected>Selecciona la opción correcta</option>
                 <option value="option1">Opción 1</option>
                 <option value="option2">Opción 2</option>
                 <option value="option3">Opción 3</option>
                 <option value="option4">Opción 4</option>
             </select>
-            
+            <!-- frontend\screen\createQuestion.html -->
             <button type="submit">Guardar Pregunta</button>
         </form>
     </div>
 
     <!-- Confirmation Modal -->
-    <div id="confirmationModal" class="modal">
+    <!-- <div id="confirmationModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="modalMessage">Pregunta creada exitosamente.</p>
         </div>
-    </div>
+    </div> -->
 
     <script src="../js/createQuestion.js"></script>
 </body>

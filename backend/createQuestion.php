@@ -19,7 +19,7 @@
         }
 
         // Preparar la consulta SQL para insertar la nueva pregunta
-        $sql = "INSERT INTO questions (question, option1, option2, option3, option4, correct_option) 
+        $sql = "INSERT INTO questions (question, option1, option2, option3, option4, correctOption) 
                 VALUES (?, ?, ?, ?, ?, ?)";
 
         // Preparar la declaración
@@ -34,10 +34,8 @@
         // Ejecutar la consulta
         if ($stmt->execute()) {
             echo "Pregunta guardada exitosamente.";
-            // Redirigir a una página de éxito o mostrar mensaje de éxito
-            header("Location: ../frontend/screen/createQuestion.html");
         } else {
-            echo "Error: " . $stmt->error;
+            echo "Error en la ejecución de la consulta: " . $stmt->error;
         }
 
         // Cerrar la declaración

@@ -37,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Redirect based on user role
             if ($_SESSION['role'] == 'Administrador') {
-                header("Location: ../frontend/screen/dashboard.php");
+                header("Location: ../frontend/screen/dashboard.html");
             } elseif ($_SESSION['role'] == 'Docente') {
-                header("Location: ../frontend/screen/createQuestion.php");
+                header("Location: ../frontend/screen/createQuestion.html");
             } elseif ($_SESSION['role'] == 'Estudiante') {
                 header("Location: ../frontend/screen/viewResults.html");
             } else {

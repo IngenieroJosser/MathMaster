@@ -45,6 +45,7 @@
 
 .container-create-question button:hover {
     background-color: var(--color-secondary);
+    color: #000;
 }
 
 /* styles for the modal */
