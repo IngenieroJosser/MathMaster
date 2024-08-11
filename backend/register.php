@@ -35,7 +35,7 @@
         if ($stmt->execute()) {
             echo "Registro exitoso.";
             // Redirigir a la página de inicio de sesión u otra página
-            header("Location: login.html");
+            header("Location: ../frontend/screen/login.html");
         } else {
             echo "Error en la ejecución de la consulta: " . $stmt->error;
         }

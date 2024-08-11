@@ -1,60 +1,60 @@
 <?php
-// Include database connection file
-include 'connection.php';
+    // Incluir la conexión a la base de datos
+    include('connection.php');
 
-session_start();
+    // Iniciar la sesión
+    session_start();
 
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get and sanitize form inputs
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    // Verificar si el formulario fue enviado
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Obtener los datos del formulario
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-    // Check that inputs are not empty
-    if (empty($email) || empty($password)) {
-        die("Email and password are required");
-    }
-
-    // Prepare SQL query to select user by email
-    $stmt = $conn->prepare("SELECT id, username, password, role FROM user WHERE email = ?");
-    if ($stmt === false) {
-        die("Error preparing the query: " . $conn->error);
-    }
-    
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+        // Preparar la consulta SQL para verificar las credenciales
+        $sql = "SELECT id, username, email, password, role FROM user WHERE email = ?";
         
-        // Verify password
-        if (password_verify($password, $user['password'])) {
-            // Store user information in session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
-            
-            // Redirect based on user role
-            if ($_SESSION['role'] == 'Administrador') {
-                header("Location: ../frontend/screen/dashboard.html");
-            } elseif ($_SESSION['role'] == 'Docente') {
-                header("Location: ../frontend/screen/createQuestion.html");
-            } elseif ($_SESSION['role'] == 'Estudiante') {
-                header("Location: ../frontend/screen/viewResults.html");
-            } else {
-                echo "Rol no reconocido";
-            }
-            exit();
-        } else {
-            echo "Email o contraseña invalida";
+        // Preparar la declaración
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $conn->error);
         }
+
+        // Vincular los parámetros
+        $stmt->bind_param("s", $email);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Verificar si se encontró un usuario con ese email
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+
+            // Verificar la contraseña
+            if (password_verify($password, $user['password'])) {
+                // Guardar la información del usuario en la sesión
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+
+                // Devolver éxito
+                echo "success";
+            } else {
+                // Contraseña incorrecta
+                echo "error: Contraseña incorrecta.";
+            }
+        } else {
+            // Usuario no encontrado
+            echo "error: Usuario no encontrado.";
+        }
+
+        // Cerrar la declaración
+        $stmt->close();
     } else {
-        echo "Email o contraseña invalida";
+        echo "error: El formulario no se ha enviado correctamente.";
     }
 
-    $stmt->close();
-}
-
-$conn->close();
+    // Cerrar la conexión
+    $conn->close();
 ?>

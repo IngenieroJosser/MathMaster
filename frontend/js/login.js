@@ -1,54 +1,48 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    // Obtener los valores del formulario
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('loginForm');
+    const modal = document.getElementById('loginModal');
+    const closeModal = modal.querySelector('.close');
+    const modalMessage = document.getElementById('modalMessage');
 
-    // Validar (aquí deberías agregar tu lógica de autenticación)
-    if (username && password) {
-        // Mostrar el modal
-        const modal = document.getElementById('loginModal');
-        const closeModal = document.querySelector('.modal .close');
-        const modalMessage = document.getElementById('modalMessage');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('success')) {
+                modalMessage.textContent = 'Iniciando sesión...';
+                modal.style.display = 'block';
 
-        modalMessage.textContent = 'Iniciando sesión...';
-
-        modal.style.display = 'block';
-
-        // Cerrar el modal al hacer clic en el botón de cierre
-        closeModal.onclick = function() {
-            modal.style.display = 'none';
-            // Redirigir a otra página, por ejemplo:
-            // window.location.href = 'dashboard.html';
-        }
-
-        // Cerrar el modal al hacer clic fuera del contenido del modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
+                // Redirigir después de un breve retraso
+                setTimeout(() => {
+                    window.location.href = "../dashboard.html";
+                }, 1500);
+            } else {
+                modalMessage.textContent = data.includes('error') ? data : 'Hubo un error al iniciar sesión.';
+                modal.style.display = 'block';
             }
-        }
-    } else {
-        // Mostrar un mensaje de error si falta algún campo
-        const modal = document.getElementById('loginModal');
-        const closeModal = document.querySelector('.modal .close');
-        const modalMessage = document.getElementById('modalMessage');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            modalMessage.textContent = 'Hubo un error al iniciar sesión.';
+            modal.style.display = 'block';
+        });
+    });
 
-        modalMessage.textContent = 'Por favor, completa todos los campos.';
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
 
-        modal.style.display = 'block';
-
-        // Cerrar el modal al hacer clic en el botón de cierre
-        closeModal.onclick = function() {
+    // Cerrar el modal si se hace clic fuera de él
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
             modal.style.display = 'none';
         }
-
-        // Cerrar el modal al hacer clic fuera del contenido del modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    }
+    });
 });
