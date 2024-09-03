@@ -7,8 +7,8 @@
 
     // Verificar si el formulario fue enviado
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Obtener los datos del formulario
-        $email = $_POST['email'];
+        // Obtener los datos del formulario y sanitizarlos
+        $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
         $password = $_POST['password'];
 
         // Preparar la consulta SQL para verificar las credenciales
@@ -38,21 +38,26 @@
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
 
-                // Devolver éxito
-                echo "success";
+                // Redirigir al usuario a la página de dashboard
+                header("Location: dashboard.php");
+                exit();
             } else {
-                // Contraseña incorrecta
-                echo "error: Contraseña incorrecta.";
+                // Contraseña incorrecta, redirigir con un mensaje de error
+                header("Location: login.php?error=Contraseña incorrecta.");
+                exit();
             }
         } else {
-            // Usuario no encontrado
-            echo "error: Usuario no encontrado.";
+            // Usuario no encontrado, redirigir con un mensaje de error
+            header("Location: login.php?error=Usuario no encontrado.");
+            exit();
         }
 
         // Cerrar la declaración
         $stmt->close();
     } else {
-        echo "error: El formulario no se ha enviado correctamente.";
+        // Redirigir si el formulario no fue enviado correctamente
+        header("Location: login.php?error=El formulario no se ha enviado correctamente.");
+        exit();
     }
 
     // Cerrar la conexión
