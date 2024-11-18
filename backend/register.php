@@ -20,7 +20,7 @@
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         // Preparar la consulta SQL para insertar el nuevo usuario
-        $sql = "INSERT INTO user (username, email, password, role) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
 
         // Preparar la declaración
         $stmt = $conn->prepare($sql);

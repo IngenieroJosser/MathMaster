@@ -12,7 +12,7 @@
         $password = $_POST['password'];
 
         // Preparar la consulta SQL para verificar las credenciales
-        $sql = "SELECT id, username, email, password, role FROM user WHERE email = ?";
+        $sql = "SELECT id, username, email, password, role FROM users WHERE email = ?";
         
         // Preparar la declaración
         $stmt = $conn->prepare($sql);
@@ -39,7 +39,7 @@
                 $_SESSION['role'] = $user['role'];
 
                 // Redirigir al usuario a la página de dashboard
-                header("Location: dashboard.php");
+                header("Location: ../frontend/screen/dashboard.html");
                 exit();
             } else {
                 // Contraseña incorrecta, redirigir con un mensaje de error
@@ -48,7 +48,7 @@
             }
         } else {
             // Usuario no encontrado, redirigir con un mensaje de error
-            header("Location: login.php?error=Usuario no encontrado.");
+            header("Location: ../frontend/login.html?error=Usuario no encontrado.");
             exit();
         }
 
