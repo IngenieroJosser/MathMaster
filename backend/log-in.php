@@ -38,12 +38,26 @@
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
 
-                // Redirigir al usuario a la página de dashboard
-                header("Location: ../frontend/screen/dashboard.html");
+                // Redirigir al usuario según su rol
+                switch ($user['role']) {
+                    case 'Administrador':
+                        header("Location: ../frontend/screen/dashboard.html");
+                        break;
+                    case 'Docente':
+                        header("Location: ../frontend/screen/createQuestion.html.html");
+                        break;
+                    case 'Estudiante':
+                        header("Location: ../frontend/screen/viewResults.html");
+                        break;
+                    default:
+                        // Redirigir a una página de error si el rol no es reconocido
+                        header("Location: ../frontend/login.html?error=Rol no reconocido.");
+                        break;
+                }
                 exit();
             } else {
                 // Contraseña incorrecta, redirigir con un mensaje de error
-                header("Location: login.php?error=Contraseña incorrecta.");
+                header("Location: ../frontend/login.html?error=Contraseña incorrecta.");
                 exit();
             }
         } else {
@@ -56,7 +70,7 @@
         $stmt->close();
     } else {
         // Redirigir si el formulario no fue enviado correctamente
-        header("Location: login.php?error=El formulario no se ha enviado correctamente.");
+        header("Location: ../frontend/login.html?error=El formulario no se ha enviado correctamente.");
         exit();
     }
 
