@@ -13,6 +13,7 @@
         <!-- Barra de búsqueda y filtros -->
         <div class="search-filters">
             <input type="text" id="search" placeholder="Buscar usuario...">
+            <a href="./dashboard.html" class="btn-dashboard">Dashoard</a>
             <label for="roleFilter" class="visually-hidden">Filtrar por rol</label>
             <select id="roleFilter">
                 <option value="">Todos los roles</option>

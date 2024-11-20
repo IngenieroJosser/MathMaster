@@ -25,8 +25,8 @@
             <label for="option4">Opción 4</label>
             <input type="text" id="option4" name="option4">
             
-            <label for="correctOption">Opción Correcta</label>
-            <select id="correctOption" name="correctOption" required>
+            <label for="correct_option">Opción Correcta</label>
+            <select id="correct_option" name="correct_option" required>
                 <option value="" selected>Selecciona la opción correcta</option>
                 <option value="option1">Opción 1</option>
                 <option value="option2">Opción 2</option>
@@ -39,12 +39,12 @@
     </div>
 
     <!-- Confirmation Modal -->
-    <!-- <div id="confirmationModal" class="modal" style="display:none;">
+    <div id="confirmationModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="modalMessage">Pregunta creada exitosamente.</p>
         </div>
-    </div> -->
+    </div>
 
     <script src="../js/createQuestion.js"></script>
 </body>

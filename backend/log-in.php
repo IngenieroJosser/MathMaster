@@ -41,13 +41,13 @@
                 // Redirigir al usuario según su rol
                 switch ($user['role']) {
                     case 'Administrador':
-                        header("Location: ../frontend/screen/dashboard.html");
+                        header("Location: ../frontend/screen/userAdministration.php");
                         break;
                     case 'Docente':
-                        header("Location: ../frontend/screen/createQuestion.html.html");
+                        header("Location: ../frontend/screen/createQuestion.php");
                         break;
                     case 'Estudiante':
-                        header("Location: ../frontend/screen/viewResults.html");
+                        header("Location: ../frontend/screen/viewResults.php");
                         break;
                     default:
                         // Redirigir a una página de error si el rol no es reconocido

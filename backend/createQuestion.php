@@ -10,7 +10,7 @@
         $option2 = $_POST['option2'];
         $option3 = isset($_POST['option3']) ? $_POST['option3'] : NULL;
         $option4 = isset($_POST['option4']) ? $_POST['option4'] : NULL;
-        $correctOption = $_POST['correctOption'];
+        $correctOption = $_POST['correct_option'];
 
         // Validar que la opción correcta sea una de las opciones proporcionadas
         $valid_options = ['option1', 'option2', 'option3', 'option4'];
@@ -19,7 +19,7 @@
         }
 
         // Preparar la consulta SQL para insertar la nueva pregunta
-        $sql = "INSERT INTO questions (question, option1, option2, option3, option4, correctOption) 
+        $sql = "INSERT INTO questions (question, option1, option2, option3, option4, correct_option) 
                 VALUES (?, ?, ?, ?, ?, ?)";
 
         // Preparar la declaración
