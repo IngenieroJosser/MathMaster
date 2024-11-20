@@ -23,6 +23,7 @@
 <body>
     <div class="container">
         <h1>Responder Encuesta</h1>
+        <a href="../../backend/cerrar-sesion.php">Cerrar sesión</a>
         <form id="studentAnswersForm" action="../../backend/submitAnswers.php" method="POST" onsubmit="showModal(event)">
             <?php
                 // Mostrar las preguntas

@@ -78,11 +78,6 @@ table th {
     cursor: pointer;
 }
 
-.container-view-questions {
-    margin-top: 2em;
-    padding: 20px;
-}
-
 .pagination button:hover {
     background-color: var(--color-secondary);
 }

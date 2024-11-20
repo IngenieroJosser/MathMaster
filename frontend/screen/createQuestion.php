@@ -35,6 +35,7 @@
             </select>
             <!-- frontend\screen\createQuestion.html -->
             <button type="submit">Guardar Pregunta</button>
+            <a class="viewResultStudents" href="viewResultStudents.php">Ver respuestas de los estudiantes</a>
         </form>
     </div>
 

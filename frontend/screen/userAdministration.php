@@ -1,3 +1,15 @@
+<?php
+include('../../backend/connection.php'); // Incluir la conexión a la base de datos
+
+// Consultar todos los usuarios
+$sql = "SELECT id, username, email, role, created_at FROM users";
+$result = $conn->query($sql);
+
+// Consultar todas las preguntas
+$sql = "SELECT * FROM questions";
+$resultQuestion = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,12 +20,12 @@
 </head>
 <body>
     <div class="container-admin-users">
-        <h1>Administración de Usuarios - MathMaster</h1>
+        <h1> Panel de Administración - MathMaster</h1>
         
         <!-- Barra de búsqueda y filtros -->
         <div class="search-filters">
             <input type="text" id="search" placeholder="Buscar usuario...">
-            <a href="./dashboard.html" class="btn-dashboard">Dashoard</a>
+            <!-- <a href="./dashboard.html" class="btn-dashboard">Dashboard</a> -->
             <label for="roleFilter" class="visually-hidden">Filtrar por rol</label>
             <select id="roleFilter">
                 <option value="">Todos los roles</option>
@@ -22,8 +34,8 @@
                 <option value="estudiante">Estudiante</option>
             </select>
         </div>
-        
 
+        <!-- Tabla de usuarios -->
         <table>
             <thead>
                 <tr>
@@ -35,40 +47,66 @@
                 </tr>
             </thead>
             <tbody id="userTableBody">
-                <!-- Esto es la filas de los usuarios que se llenarán dinámicamente con JavaScript -->
+                <?php
+                if ($result->num_rows > 0) {
+                    // Mostrar los datos de los usuarios
+                    while($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['username']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['role']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['created_at']) . "</td>";
+                        echo "<td>
+                                <a href='../../backend/edit_user.php?id=" . $row['id'] . "' class='edit-btn'>Editar</a>
+                                <a href='../../backend/delete_user.php?id=" . $row['id'] . "' class='delete-btn'>Eliminar</a>
+                            </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='5'>No hay usuarios registrados.</td></tr>";
+                }
+                ?>
             </tbody>
         </table>
-        
-        <div class="pagination">
-            <button id="prevPage">« Anterior</button>
-            <button id="nextPage">Siguiente »</button>
-        </div>
-    </div>
 
-    <!-- Modal para ver y editar usuarios -->
-    <div id="userModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modalTitle">Detalles del Usuario</h2>
-            <form id="userForm">
-                <label for="username">Nombre de Usuario</label>
-                <input type="text" id="username" name="username" required>
-                
-                <label for="email">Correo Electrónico</label>
-                <input type="email" id="email" name="email" required>
-                
-                <label for="role">Rol</label>
-                <select id="role" name="role" required>
-                    <option value="admin">Administrador</option>
-                    <option value="docente">Docente</option>
-                    <option value="estudiante">Estudiante</option>
-                </select>
-                
-                <button type="submit">Guardar Cambios</button>
-            </form>
-        </div>
+        <!-- Tabla de preguntas -->
+        <div class="container-view-questions">
+        <h1>Ver Preguntas</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pregunta</th>
+                    <th>Opciones</th>
+                    <th>Opción Correcta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($resultQuestion->num_rows > 0) {
+                    // Mostrar las preguntas
+                    while($row = $resultQuestion->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['question']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['option1']) . ", " . htmlspecialchars($row['option2']) . ", " . htmlspecialchars($row['option3']) . ", " . htmlspecialchars($row['option4']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['correct_option']) . "</td>";
+                        echo "<td>
+                                <a href='../../backend/editQuestion.php?id=" . $row['id'] . "' class='edit-btn'>Editar</a>
+                                <a href='../../backend/deleteQuestion.php?id=" . $row['id'] . "' class='delete-btn'>Eliminar</a>
+                              </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4'>No hay preguntas registradas.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
     </div>
-
-    <script src="../js/userAdministration.js"></script>
+    <!-- <script src="../js/userAdministration.js"></script> -->
 </body>
 </html>
+
+<?php
+$conn->close(); // Cerrar la conexión
+?>

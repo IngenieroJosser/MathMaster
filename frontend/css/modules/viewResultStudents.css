@@ -19,6 +19,18 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.container a {
+    background-color: var(--color-tertiary);
+    padding: .9em 1.1em;
+    border-radius: 11px;
+    color: #FFF;
+    transition: all .2s ease;
+}
+
+.container a:hover {
+    background-color: var(--color-quaternary);
+}
+
 h1 {
     font-size: 28px;
     color: var(--color-primary);
@@ -26,19 +38,39 @@ h1 {
     text-align: center;
 }
 
-.question-card {
+/* Estilo para el contenedor de resultados */
+.results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid automático */
+    gap: 20px; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+}
+
+/* Estilo para cada tarjeta de resultado */
+.result-card {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     padding: 20px;
-    margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all .3s ease;
 }
 
-.question-card h2 {
+.result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.result-card h2 {
     font-size: 20px;
-    color: var(--color-secondary);
+    color: var(--color-primary);
     margin-bottom: 10px;
+}
+
+.result-card p {
+    font-size: 16px;
+    color: var(--color-secondary);
+    margin-bottom: 8px;
 }
 
 /* Estilo para las opciones de respuesta */
@@ -85,6 +117,7 @@ h1 {
     background-color: var(--color-tertiary);
     border-radius: 4px;
     padding: 6px;
+
 }
 
 form button[type="submit"] {
@@ -151,61 +184,6 @@ form button:active {
     background-color: var(--color-tertiary);
 }
 
-.container a {
-    background-color: var(--color-tertiary);
-    padding: .9em 1.1em;
-    border-radius: 11px;
-    color: #FFF;
-    transition: all .2s ease;
-}
-
-.container a:hover {
-    background-color: var(--color-quaternary);
-}
-
-/* Estilo para el contenedor de resultados */
-.results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Grid automático */
-    gap: 20px; /* Espacio entre las tarjetas */
-    margin-top: 20px;
-}
-
-/* Estilo para cada tarjeta de resultado */
-.result-card {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all .3s ease;
-}
-
-.result-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.result-card h2 {
-    font-size: 20px;
-    color: var(--color-primary);
-    margin-bottom: 10px;
-}
-
-.result-card p {
-    font-size: 16px;
-    color: var(--color-secondary);
-    margin-bottom: 8px;
-}
-
-/* Hacer que el diseño sea más responsivo en pantallas pequeñas */
-@media (max-width: 768px) {
-    .results {
-        grid-template-columns: 1fr; /* En pantallas pequeñas, una columna */
-    }
-}
-
-
 /* Responsiveness */
 @media (max-width: 768px) {
     .container {
@@ -227,5 +205,10 @@ form button:active {
 
     form button {
         width: 100%;
+    }
+
+    /* Para pantallas pequeñas, una columna */
+    .results {
+        grid-template-columns: 1fr;
     }
 }
